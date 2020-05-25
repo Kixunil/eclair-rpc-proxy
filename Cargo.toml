@@ -1,0 +1,39 @@
+[package]
+name = "btc_rpc_proxy"
+version = "0.1.0"
+authors = ["Martin Habovštiak <martin.habovstiak@gmail.com>"]
+build = "build.rs"
+description = "Finer-grained permission management for eclair."
+edition = "2018"
+
+[package.metadata.configure_me]
+spec = "config_spec.toml"
+
+[dependencies]
+hyper = "0.11.2"
+base64 = "0.9.3"
+futures = "0.1"
+enum_future = "0.1"
+tokio-core = "0.1"
+serde = "1"
+serde_derive = "1"
+serde_json = "1"
+slog = "2.2.3"
+slog-term = "2.4"
+slog-async = "2.3"
+configure_me = "0.3.3"
+
+[build_dependencies]
+configure_me_codegen = { version = "0.3.12", features = ["debconf"]}
+
+[package.metadata.deb]
+extended-description = """
+This is a proxy made specifically for `eclair` to allow finer-grained control of permissions. It enables you to specify several users and for each user the list of RPC calls he's allowed to make.
+
+This is useful because `eclair` allows every application with password to make possibly harmful calls like spending all your money. If you have several applications, you can provide the less trusted ones a different password and permissions than the others using this project.
+
+Especially, you can allow certain applications, like BTCPayServer to create invoices, but not spend the money."""
+assets = [
+	["target/release/btc_rpc_proxy", "usr/bin/btc_rpc_proxy", "755"],
+	["target/man/btc_rpc_proxy.1", "usr/bin/btc_rpc_proxy", "644"],
+]

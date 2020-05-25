@@ -1,0 +1,62 @@
+[general]
+conf_file_param = "conf"
+conf_dir_param = "conf_dir"
+doc = """
+Eclair RPC proxy enables you to define finer-grained permissions for your eclair Lightning Network node. You can for example only allow certain calls to be made by specific users (by sharing specific password). The calls are defined using whitelist and an example of configuration file is provided with the source code. An obvious use case is allowing the client creating new invoices, but preventing him from spending money."""
+
+#[debconf]
+#package_name = "eclair-rpc-proxy-mainnet"
+
+[[param]]
+name = "eclair_user"
+type = "String"
+doc = "The user name used when connecting to the real eclair."
+
+[[param]]
+name = "eclair_password"
+type = "String"
+argument = false
+doc = "The password used when connecting to the real eclair."
+
+# Reserved if cookie files get implemented by eclair one day
+#[[param]]
+#name = "cookie_file"
+#type = "std::path::PathBuf"
+#argument = false
+#doc = "The file in which eclair stores authentication cookie. Can be used instead of user:password."
+
+[[param]]
+name = "bind_address"
+type = "::std::net::IpAddr"
+default = "[127, 0, 0, 1].into()"
+doc = "The address used for listening."
+#debconf_priority = "low"
+#debconf_default = "127.0.0.1"
+
+[[param]]
+name = "bind_port"
+type = "u16"
+default = "8083"
+doc = "The port used for listening."
+#debconf_priority = "low"
+#debconf_default = "8083"
+
+[[param]]
+name = "eclair_address"
+type = "::std::net::IpAddr"
+default = "[127, 0, 0, 1].into()"
+doc = "The address of the real eclair."
+
+[[param]]
+name = "eclair_port"
+type = "u16"
+default = "8080"
+doc = "The port of the real eclair."
+
+[[param]]
+name = "user"
+type = "::std::collections::HashMap<String, crate::User>"
+merge_fn = "std::iter::Extend::extend"
+optional = false
+argument = false
+doc = "Map of user names to user configs. Each user must specify `password` field and an array of allowed calls named `allowed_calls`"

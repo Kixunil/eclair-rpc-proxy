@@ -1,0 +1,37 @@
+# This is an example configuration file for eclair-rpc-proxy
+
+eclair_user = "eclair-cli"
+eclair_password = "super-secret-eclair-password"
+bind_address = "127.0.0.1"
+bind_port = 8083
+eclair_port = 8080
+
+# This user is used by eclair-cli
+[user.eclair-cli]
+password = "secret-password-for-eclair-cli"
+# These calls allow creating invoices and checking if they were paid
+allowed_calls = [
+	"getinfo",
+	"createinvoice",
+	"parseinvoice",
+	"getreceivedinfo",
+	"getinvoice",
+	"listinvoices",
+	"listpendinginvoices",
+	"ws",
+]
+
+# BTCPayServer uses empty username and toml doesn't allow empty keys (WTF)
+# So eclair-rpc-proxy maps empty username to !!!EMPTY!!!
+[user."!!!EMPTY!!!"]
+password = "password-for-btcpayserver"
+allowed_calls = [
+	"getinfo",
+	"createinvoice",
+	"parseinvoice",
+	"getreceivedinfo",
+	"getinvoice",
+	"listinvoices",
+	"listpendinginvoices",
+	"ws",
+]
