@@ -1,5 +1,5 @@
 [package]
-name = "btc_rpc_proxy"
+name = "eclair_rpc_proxy"
 version = "0.1.0"
 authors = ["Martin Habovštiak <martin.habovstiak@gmail.com>"]
 build = "build.rs"
